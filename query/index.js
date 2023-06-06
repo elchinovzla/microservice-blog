@@ -14,22 +14,23 @@ app.get("/posts", (req, res) => {
 
 app.post("/events", (req, res) => {
   const { type, data } = req.body;
-  const { id } = data;
+  const { id, content, postId, status } = data;
+  const post = posts[postId];
+
   switch (type) {
     case "POST_CREATED":
       const { title } = data;
       posts[id] = { id, title, comments: [] };
       break;
     case "COMMENT_CREATED":
-      const { content, postId } = data;
-      const post = posts[postId];
-      post?.comments?.push({ id, content });
+      post?.comments?.push({ id, content, status });
       break;
-    default:
-      console.log("event type unknown");
-      res.status(500);
+    case "COMMENT_UPDATED":
+      const comment = post.comments.find((comment) => comment.id === id);
+      comment.status = status;
+      comment.content = content;
+      break;
   }
-
   res.status(201);
 });
 

@@ -17,6 +17,9 @@ app.post("/events", (req, res) => {
   axios
     .post("http://localhost:4002/events", event)
     .catch((error) => console.log("4002 service error out: " + error.code));
+  axios
+    .post("http://localhost:4003/events", event)
+    .catch((error) => console.log("4003 service error out: " + error.code));
 
   res.status(200);
 });
