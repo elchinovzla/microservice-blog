@@ -12,16 +12,16 @@ app.post("/events", (req, res) => {
   events.push(event);
 
   axios
-    .post("http://localhost:4000/events", event)
+    .post("http://posts-srv:4000/events", event)
     .catch((error) => console.log("4000 service error out: " + error.code));
   axios
-    .post("http://localhost:4001/events", event)
+    .post("http://comments-srv:4001/events", event)
     .catch((error) => console.log("4001 service error out: " + error.code));
   axios
-    .post("http://localhost:4002/events", event)
+    .post("http://query-srv:4002/events", event)
     .catch((error) => console.log("4002 service error out: " + error.code));
   axios
-    .post("http://localhost:4003/events", event)
+    .post("http://moderation-srv:4003/events", event)
     .catch((error) => console.log("4003 service error out: " + error.code));
 
   res.status(200);
